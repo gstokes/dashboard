@@ -36,9 +36,23 @@
   }
 
   .wrap{
-    max-width: 480px;
+    max-width: 1200px;
     margin: 0 auto;
     padding: 28px 18px 48px;
+  }
+
+  #main{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  @media (min-width: 768px){
+    #main{
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+    }
   }
 
   header.masthead{
@@ -81,7 +95,7 @@
     opacity: 0.9;
   }
 
-  section.block{ margin-bottom: 40px; }
+  section.block{ margin-bottom: 0; }
 
   .block-head{
     display:flex;
