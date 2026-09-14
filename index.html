@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personal Reference Index</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #1E2A32;
+    --bg-deep: #172026;
+    --line: #3A4750;
+    --card: #FAF6EE;
+    --card-border: #E4DCC8;
+    --ink: #2B2620;
+    --ink-soft: #6B6154;
+    --on-dark: #EDE7DA;
+    --muted-on-dark: #9BA8AE;
+    --course: #D9A441;
+    --course-deep: #9C7420;
+    --movies: #B5473A;
+    --movies-deep: #7F332A;
+    --bikes: #3F7C8A;
+    --bikes-deep: #2C5860;
+  }
+
+  * { box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: var(--bg);
+    color: var(--on-dark);
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap{
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 28px 18px 48px;
+  }
+
+  header.masthead{
+    position: relative;
+    padding-bottom: 22px;
+    margin-bottom: 26px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  header.masthead p.kicker{
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: var(--muted-on-dark);
+    letter-spacing: 0.01em;
+  }
+
+  header.masthead h1{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 30px;
+    line-height: 1.15;
+    margin: 0;
+    color: var(--on-dark);
+  }
+
+  .stamp{
+    position: absolute;
+    top: -6px;
+    right: 0;
+    transform: rotate(4deg);
+    border: 1.5px solid #C7784F;
+    color: #E3A87A;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    white-space: nowrap;
+    opacity: 0.9;
+  }
+
+  section.block{ margin-bottom: 40px; }
+
+  .block-head{
+    display:flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .block-head h2{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 22px;
+    margin: 0;
+    color: var(--on-dark);
+  }
+
+  .swatch{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .swatch.course{ background: var(--course); }
+  .swatch.movies{ background: var(--movies); }
+  .swatch.bikes{ background: var(--bikes); }
+
+  .block-head span.tally{
+    font-size: 13px;
+    color: var(--muted-on-dark);
+    margin-left: auto;
+  }
+
+  /* Coursework card */
+  .course-card{
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 18px 18px 8px;
+    color: var(--ink);
+  }
+
+  .course-card h3{
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    margin: 0 0 4px;
+  }
+
+  .course-card .meta{
+    font-size: 13px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+  }
+
+  .next-up{
+    background: #F1E4C4;
+    border: 1px solid #E0CD9A;
+    border-radius: 7px;
+    padding: 10px 12px;
+    margin-bottom: 18px;
+    font-size: 13.5px;
+  }
+  .next-up strong{ color: var(--course-deep); font-weight: 600; }
+
+  .timeline{
+    position: relative;
+    padding-left: 22px;
+    margin-bottom: 8px;
+  }
+
+  .timeline::before{
+    content: "";
+    position: absolute;
+    left: 5px;
+    top: 6px;
+    bottom: 14px;
+    width: 2px;
+    background: var(--card-border);
+  }
+
+  .phase{
+    position: relative;
+    padding-bottom: 16px;
+  }
+  .phase:last-child{ padding-bottom: 4px; }
+
+  .phase::before{
+    content:"";
+    position: absolute;
+    left: -22px;
+    top: 3px;
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--ink-soft);
+  }
+
+  .phase.active::before{
+    border-color: var(--course-deep);
+    background: var(--course);
+  }
+
+  .phase .p-name{
+    font-weight: 600;
+    font-size: 14.5px;
+  }
+  .phase.active .p-name{ color: var(--course-deep); }
+
+  .phase .p-date{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+  }
+
+  .phase .p-next{
+    display:inline-block;
+    font-size: 10.5px;
+    font-weight: 600;
+    color: var(--course-deep);
+    background: #EFDFB2;
+    border-radius: 3px;
+    padding: 1px 6px;
+    margin-left: 6px;
+    vertical-align: middle;
+  }
+
+  .loc-note{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    border-top: 1px solid var(--card-border);
+    padding: 12px 0;
+    margin-top: 4px;
+  }
+
+  /* Watchlist */
+  .filters{
+    display:flex;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .filter-btn{
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    background: transparent;
+    border: 1px solid var(--line);
+    color: var(--muted-on-dark);
+    padding: 7px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  }
+  .filter-btn:hover{ border-color: var(--movies); }
+  .filter-btn.is-active{
+    background: var(--movies);
+    border-color: var(--movies);
+    color: #FBEFEC;
+  }
+  .filter-btn:focus-visible{
+    outline: 2px solid var(--movies);
+    outline-offset: 2px;
+  }
+
+  .genre-group{ margin-bottom: 20px; }
+  .genre-group h3{
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 15px;
+    color: var(--muted-on-dark);
+    margin: 0 0 8px;
+  }
+
+  .film-row{
+    display:flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .film-row:last-child{ border-bottom: none; }
+
+  .status-dot{
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    margin-top: 6px;
+    border: 1.5px solid var(--movies);
+  }
+  .status-dot.seen{ background: var(--movies); }
+  .status-dot.list{ background: transparent; }
+  .status-dot.bike{ background: var(--bikes); border-color: var(--bikes); }
+
+  .film-title{
+    font-size: 14.5px;
+    line-height: 1.3;
+  }
+  .film-title .yr{
+    color: var(--muted-on-dark);
+    font-size: 13px;
+  }
+  .film-source{
+    font-size: 12px;
+    color: var(--muted-on-dark);
+    margin-top: 2px;
+  }
+
+  .film-row[data-status="seen"] .film-source::before{ content: "Seen — "; }
+  .film-row[data-status="list"] .film-source::before{ content: "On the list — "; }
+
+  main.is-filtered-seen .film-row[data-status="list"]{ display:none; }
+  main.is-filtered-list .film-row[data-status="seen"]{ display:none; }
+
+  footer{
+    border-top: 1px solid var(--line);
+    padding-top: 16px;
+    font-size: 12.5px;
+    color: var(--muted-on-dark);
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .filter-btn{ transition: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="kicker">Personal reference index</p>
+    <h1>Three things you asked&nbsp;me<br>to keep track of.</h1>
+    <div class="stamp">FILED&nbsp;13&nbsp;SEP&nbsp;2026</div>
+  </header>
+
+  <main id="main">
+
+    <section class="block">
+      <div class="block-head">
+        <span class="swatch course"></span>
+        <h2>Coursework</h2>
+      </div>
+
+      <div class="course-card">
+        <h3>Professional Diploma in Service Design</h3>
+        <div class="meta">National College of Art and Design · Sept 2026 – May 2027</div>
+
+        <div class="next-up">
+          <strong>Next up —</strong> Wed 23 Sept, 10am–1pm, Room 3.02, Grace Gifford Building
+        </div>
+
+        <div class="timeline">
+          <div class="phase active">
+            <div class="p-name">Design Principles <span class="p-next">Next</span></div>
+            <div class="p-date">23 Sept – 28 Oct 2026</div>
+          </div>
+          <div class="phase">
+            <div class="p-name">Design Collaborations 1 — sprint</div>
+            <div class="p-date">2–6 Nov 2026 · Mater Hospital</div>
+          </div>
+          <div class="phase">
+            <div class="p-name">Field Work</div>
+            <div class="p-date">11 Nov 2026 – 13 Jan 2027</div>
+          </div>
+          <div class="phase">
+            <div class="p-name">Design Capstone 1</div>
+            <div class="p-date">27 Jan – 3 Mar 2027</div>
+          </div>
+          <div class="phase">
+            <div class="p-name">Design Practices</div>
+            <div class="p-date">10 Mar – 28 Apr 2027</div>
+          </div>
+          <div class="phase">
+            <div class="p-name">Field Work</div>
+            <div class="p-date">5 – 19 May 2027</div>
+          </div>
+        </div>
+
+        <div class="loc-note">Regular sessions run Wednesdays, 10am–1pm, Room 3.02.</div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <span class="swatch movies"></span>
+        <h2>Watchlist</h2>
+        <span class="tally">14 films</span>
+      </div>
+
+      <div class="filters">
+        <button class="filter-btn is-active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="seen">Seen</button>
+        <button class="filter-btn" data-filter="list">On the list</button>
+      </div>
+
+      <div class="genre-group">
+        <h3>Science Fiction</h3>
+        <div class="film-row" data-status="list">
+          <span class="status-dot list"></span>
+          <div>
+            <div class="film-title">Dune <span class="yr">2021</span></div>
+            <div class="film-source">HBO Max premiere email</div>
+          </div>
+        </div>
+        <div class="film-row" data-status="seen">
+          <span class="status-dot seen"></span>
+          <div>
+            <div class="film-title">Blade Runner 2049 <span class="yr">2017</span></div>
+            <div class="film-source">Cineworld e-ticket</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Western</h3>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">The Searchers <span class="yr">1956</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">High Noon <span class="yr">1952</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">The Good, the Bad and the Ugly <span class="yr">1966</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">The Wild Bunch <span class="yr">1969</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">Once Upon a Time in the West <span class="yr">1968</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">Unforgiven <span class="yr">1992</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">McCabe &amp; Mrs. Miller <span class="yr">1971</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">Butch Cassidy and the Sundance Kid <span class="yr">1969</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">The Assassination of Jesse James by the Coward Robert Ford <span class="yr">2007</span></div><div class="film-source">No Film School list</div></div></div>
+        <div class="film-row" data-status="list"><span class="status-dot list"></span><div><div class="film-title">No Country for Old Men <span class="yr">2007</span></div><div class="film-source">No Film School list</div></div></div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Thriller</h3>
+        <div class="film-row" data-status="seen">
+          <span class="status-dot seen"></span>
+          <div>
+            <div class="film-title">Red Sparrow <span class="yr">2018</span></div>
+            <div class="film-source">Stella cinema booking</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Drama</h3>
+        <div class="film-row" data-status="list">
+          <span class="status-dot list"></span>
+          <div>
+            <div class="film-title">Hurry Up Tomorrow</div>
+            <div class="film-source">Fan screening event email</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block">
+      <div class="block-head">
+        <span class="swatch bikes"></span>
+        <h2>Bikes</h2>
+        <span class="tally">6 items</span>
+      </div>
+
+      <div class="genre-group">
+        <h3>Gear</h3>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">Apace Illuma ZT3000 <span class="yr">light</span></div><div class="film-source">Reviewed on Amazon, Nov 2018</div></div></div>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">Yakamoz Cyclists <span class="yr">light</span></div><div class="film-source">Reviewed on Amazon, Nov 2018</div></div></div>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">GuardG3X <span class="yr">light</span></div><div class="film-source">Reviewed on Amazon, Nov 2018</div></div></div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Bike Share</h3>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">BleeperBike</div><div class="film-source">Dublin bike-share, customer since 2019</div></div></div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Advocacy &amp; Community</h3>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">Dublin Cycling Campaign</div><div class="film-source">Member, strategy consultation 2017</div></div></div>
+      </div>
+
+      <div class="genre-group">
+        <h3>Local Issues</h3>
+        <div class="film-row"><span class="status-dot bike"></span><div><div class="film-title">Bicycle lane, St Luke's Avenue</div><div class="film-source">Fix Your Street report to Dublin City Council, 2017</div></div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    A snapshot of your Personal Assistant project, filed 13 Sept 2026. It won't update on its own — ask Claude to refresh it whenever new coursework, movies, or other topics turn up in your inbox.
+  </footer>
+
+</div>
+
+<script>
+  const main = document.getElementById('main');
+  const buttons = document.querySelectorAll('.filter-btn');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('is-active'));
+      btn.classList.add('is-active');
+      main.classList.remove('is-filtered-seen', 'is-filtered-list');
+      const f = btn.dataset.filter;
+      if (f === 'seen') main.classList.add('is-filtered-seen');
+      if (f === 'list') main.classList.add('is-filtered-list');
+    });
+  });
+</script>
+
+</body>
+</html>
