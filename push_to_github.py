@@ -1,6 +1,6 @@
 import json, base64, urllib.request, subprocess
 
-TOKEN = 'REDACTED'  # set via env: export GITHUB_TOKEN=...
+TOKEN = 'REDACTED'  # set via env var or secret store
 API_URL = 'https://api.github.com/repos/gstokes/dashboard/contents/index.html'
 
 get_req = urllib.request.Request(API_URL, headers={'Authorization': 'token ' + TOKEN, 'Accept': 'application/vnd.github+json'})
